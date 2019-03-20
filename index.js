@@ -1,71 +1,56 @@
-// let store = {trips: [], passengers: []}
-
-let driverId = 0
+const store = {drivers: [], passengers: [], trips: []};
+let driverId = 0;
+let passengerId = 0;
+let tripId = 0;
 
 class Driver{
-  constructor(name){
-  this.id = ++driverId
-  this.name = name
+    constructor(name){
+        this.id = ++driverId;
+        this.name = name;
+        store.drivers.push(this);
+    }
 
-  // store.trips.push(this)
-  // store.passengers.push(this)
- }
+    trips(){
+        return store.trips.filter(trip => trip.driverId === this.id);
+    }
+
+    passengers(){
+        return this.trips().map(trip => trip.passenger());
+    }
 }
-
-let driver  = new Driver('Sophie')
-
-// store.trips[]
-// store.passengers[]
-//
-// let store = {trips: [], passengers: []}
-//
-let passengerId = 0
 
 class Passenger{
-  constructor(name){
-  this.id = ++passengerId
-  this.name = name
-//
-//   store.trips.push(this)
-//   store.passengers.push(this)
-//  }
-// }
-//
-let passenger = new Passenger('Sopha')
-//
-// store.trips[]
-// store.passengers[]
+    constructor(name){
+        this.name = name;
+        this.id = ++passengerId;
+        store.passengers.push(this);
+    }
 
+    trips(){
+        return store.trips.filter(trip => trip.passengerId === this.id);
+    }
 
-let driverId = 0
-
-class Driver{
-  constructor(name){
-  this.id = ++driverId
-  this.name = name
-
-  // store.trips.push(this)
-  // store.passengers.push(this)
- }
+    drivers(){
+        return this.trips().map(trip => trip.driver());
+    }
 }
 
-let driver  = new Driver('Sophie')
-
-// store.trips[]
-// store.passengers[]
-//
-// let store = {trips: [], passengers: []}
-//
-let tripId = 0
-
 class Trip{
-  constructor(name){
-  this.id = ++tripId
-  this.name = name
-//
-//   store.trips.push(this)
-//   store.passengers.push(this)
-//  }
-// }
-//
-let trip = new Trip('Somalie')
+    constructor(driver, passenger){
+        this.driverId = driver.id;
+        this.passengerId = passenger.id;
+        this.id = ++tripId;
+
+        store.trips.push(this);
+    }
+
+    driver(){
+        return store.drivers.find(driver => driver.id === this.driverId);
+    }
+
+    passenger(){
+        return store.passengers.find(function(passenger){
+            return passenger.id === this.passengerId;
+        }.bind(this));
+    }
+}
