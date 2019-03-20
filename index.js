@@ -8,7 +8,11 @@ class Driver{
   this.name = name
 
   store.trips.push(this)
+  store.passengers.push(this)
  }
 }
 
-let driver = new Driver(2, 'Sophie')
+let driver = new Driver('Sophie')
+
+store.trips[]
+store.passengers[]
